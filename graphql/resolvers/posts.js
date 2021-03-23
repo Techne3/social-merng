@@ -31,6 +31,10 @@ module.exports = {
       const user = checkAuth(context);
       //   console.log("here are the users", user);
 
+      if (args.body.trim() === "") {
+        throw new Error(" Post body must not be empty");
+      }
+
       const newPost = new Post({
         body,
         user: user.id,
@@ -69,7 +73,7 @@ module.exports = {
 
       if (post) {
         if (post.likes.find((like) => like.username === username)) {
-          // Post already likes, unlike it
+          // Post already liked, unlike it
           post.likes = post.likes.filter((like) => like.username !== username);
         } else {
           //Not liked, like post
